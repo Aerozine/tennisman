@@ -1,0 +1,47 @@
+---
+title: "Comment flex efficacement"
+author: "Luke smith" 
+output:
+    pdf_document:
+              number_sections: true
+---
+<!-- ce qu il y a audessus c est des meta data
+Et ici en dessous du latex pour flex
+-->
+
+\tableofcontents
+\fontsize{8}{1}
+\selectfont
+<!--\newpage
+-->
+
+# bonjour 
+
+dans cette section nous allon développer absolument rien dutout 
+
+## sous section 
+	et non pas de bol toujours rien d utile 
+
+\# test  
+
+***Le latex , c est pas ouf mais le Rmarkdown , c est pété*** 
+
+$\sqrt{2}$=`r sqrt(2)`
+
+
+<!-- echo false permet de ne pas montrer le code mais juste de diffuser l output
+On peut **literalement** faire des dingueries en Rmarkdown 
+le cours de python par exemple :
+-->
+
+
+```{python pyplot, echo=FALSE}
+import numpy as np
+import matplotlib.pyplot as plt
+x=np.linspace(0,2*np.pi,200)
+y=np.zeros_like(x)
+for i in range(len(x)):
+	    y[i] = np.cos(x[i])
+plt.plot(x,y)
+plt.show()
+```
