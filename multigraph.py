@@ -4,15 +4,8 @@ import matplotlib as mpl
 from numpy.polynomial import Polynomial as poly 
 import scipy
 
-"""
-from ing_theme_matplotlib import mpl_style
-mpl.rcParams['toolbar'] = 'None'
-def plot(dark):
-      mpl_style(dark)
-ToolBar : None
-plot(dark=True)
-"""
-import mod 
+import darktheme 
+# cette ligne doit etre supprime ainsi que la lib darktheme lorsque l on rendra le  projet 
 x = np.linspace(-100,100,10000)
     
 y = np.zeros_like(x)

@@ -1,0 +1,11 @@
+diametredelabale [d] 0,065
+massedelaballe [m] 0,058
+massevolumiquedelair [rho] 1,2kg/m^3
+Coefficientdetrainé [Cd] 0,65
+Coefficientdemagnus [Cm] 1/2+1,96(v/wd)
+vitessederot [w] 0,300rad/s
+Hauteurdefrappe [Hi] 2m 3m
+hauteur du filet [Hf] 1m 
+gravitation [g] 9,81 m/s^2
+coefficientderestitution [e] 0.5 0.8
+
