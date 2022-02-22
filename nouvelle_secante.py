@@ -14,5 +14,3 @@ def secante(f, x0, x1, tol):
         else:
             x0,x1=x1,x_new
     return 'error',-1
-
-
