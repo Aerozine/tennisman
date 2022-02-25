@@ -7,7 +7,9 @@ import random
 
 def checkifgood(tol,roo,b):
     for i in range(0,len(roo)):
-        if(abs(roo[i] - b)<=tol*10):
+        if b = -1:
+            return -1
+        if abs(roo[i] - b)<=tol*10:
             return 1
     print(tol , roo, b ) 
 
