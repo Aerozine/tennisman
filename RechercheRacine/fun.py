@@ -8,6 +8,5 @@ def ction(size=4):
         return -1
     coef=np.random.rand(1,size)
     coef=coef.squeeze()
-    return poly(coef)
+    return coef
 
-print(ction())
