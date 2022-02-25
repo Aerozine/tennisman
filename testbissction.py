@@ -7,7 +7,7 @@ x=np.linspace(-10,10,150)
 
 def checkifgood(tol,roo,b):
     for i in range(0,len(roo)):
-        if (abs(roo[i]-b)<=tol)
+        if (abs(roo[i]-b)<=tol):
             return 1
     print(tol , b , roo ) 
 
@@ -15,21 +15,20 @@ def checkifgood(tol,roo,b):
 
 
 
-
+"""arr=f.roots
+realroot=arr.real[abs(arr.imag)<1e-5]
+plt.plot(realroot,np.zeros_like(realroot),"or")
+"""
 
 tol=0.00001
 
-for i in range [1,1000]:
+for i in range (1,1000):
     c=fun.ction(6)
     r=np.roots(c)
     b=bissection.bissection(poly(c),-10,10,tol)
     #print(b)
     f=poly(c)
     plt.plot(x,f(x),"g")
-"""arr=f.roots
-realroot=arr.real[abs(arr.imag)<1e-5]
-plt.plot(realroot,np.zeros_like(realroot),"or")
-"""
     roo=[]
     array=f.roots()
     for i in range (0,len(array)):

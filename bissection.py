@@ -34,5 +34,4 @@ def bissection(f,x0,x1,tol):
             fx1=ftmp
         else:
             return tmp
-    print(x0,x1,fx0,fx1)
     return(x0)
