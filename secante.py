@@ -4,6 +4,8 @@ def secante(f, x0, x1, tol):
     iteration_max=0
     a=f(x0)
     b=f(x1)
+    if abs(a)<tol :
+        return x0,0
     while iteration_max<100:
         if b==a :
             return'error',1
@@ -16,4 +18,5 @@ def secante(f, x0, x1, tol):
         a=b
         b=f(x1)
     return 'error',-1
+
 

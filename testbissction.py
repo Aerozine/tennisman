@@ -5,13 +5,13 @@ from RechercheRacine import fun
 from numpy.polynomial import Polynomial as poly 
 import random
 
-def checkifgood(tol,roo,b):
+def checkifgood(tol,roo,b,f):
     for i in range(0,len(roo)):
-        if b = -1:
+        if b == -1 or b == 1 :
             return -1
         if abs(roo[i] - b)<=tol*10:
             return 1
-    print(tol , roo, b ) 
+    print(tol , roo, b,f ) 
 
 
 
@@ -24,7 +24,7 @@ plt.plot(realroot,np.zeros_like(realroot),"or")
 
 tol=0.00001
 
-for i in range (1,1000):
+for i in range (1,100000):
     c=fun.ction(6)
     r=np.roots(c)
     #print(b)
@@ -37,7 +37,7 @@ for i in range (1,1000):
 #    b=bissection.bissection(poly(c),roo[0]-1000*random.random(),roo[0]+1000*random.random(),tol)
     b=secante.secante(poly(c),roo[0]-1000*random.random(),roo[0]+1000*random.random(),tol)
     #print(roo)
-    checkifgood(tol,roo,b)
+    checkifgood(tol,roo,b,c)
 #plt.plot(roo , np.zeros_like(roo),"or")
 #plt.plot(b,np.zeros_like(b),"ob")
 #plt.show()
