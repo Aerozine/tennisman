@@ -1,11 +1,14 @@
-import sys 
+import __main__
+import sys
 import numpy as np 
 def bissection(f,x0,x1,tol):
     a = x0 
     b = x1
+   load=open(__main__.__file__,"r")
+   print(load)
+   load.close()
     fx0=f(x0)
     fx1=f(x1)
-    print(a,b) 
     if(not fx0):
         return x0,0
     if(not fx1):
