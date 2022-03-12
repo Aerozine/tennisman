@@ -39,43 +39,64 @@ Fd = np.array([0,0,g])
 #constante d entree
 # x y z vx vy vz wx wy wz
 y=[10,10,10,5,5,5,0,4,3]
+#constante d euler
+c=(rho*np.pi*d**2)/8*m
+if(normw := np.linalg.norm(w)):
+    cm=1/(2+1.96/(d*normw))
+#Fm=cm*c*np.linalg.norm(v)**2*np.cross(v,w)
+else:
+    cm=0
+
+def euler(t,y):
+    #prends les valeurs initiales et joue avec odehrs pour lui calculer la n+1
+    #p pour position
+    p=np.array(y[:3])
+    #v pour la vitesse 
+    v=np.array(y[3:6])
+    #w pour omega
+    w=np.array(y[6:9])
+    # cree un tableau qui contient comme premiere composante la v a l instant 0
+    vtot=[v]
+    #idem position et acceleration
+    ptot=[p]
+    a=np.array([0,0,0])
+    atot=[a]
+    for i in range(int(t/step)):
+        # a chaque etape ajoute la valeur actuelle au tableau 
+        vtot=np.append(vtot,[y[3:6]],axis=0)
+        ptot=np.append(ptot,[y[:3]],axis=0)
+        # recupere la valeur de l acceleration
+        dy=oderhs(t,y)
+        # el famoso formule d euler
+        y=y+dy*step
+        atot=np.append(atot,[a],axis=0)
+        #si jamais la balle se prends le sol , on arrete
+        if(p[2]<0):
+            break
+        #quand il fini la boucle ( que la balle touche le sol ou etape max)
+        # on return la valeur des tableau tot
+    return ptot,vtot,atot
+    
 def oderhs(t,y):
-    #parsing y 
+# donner les acc en fonction des vitesse  
+    #parsing y into p , v and w 
+    #computation of the stable variable
+    # make sure that the server is using >=3.8
+    # https://peps.python.org/pep-0572/
+    #Fm=cm*c*np.linalg.norm(v)**2*np.cross(v,w)
     p=np.array(y[:3])
     v=np.array(y[3:6])
     w=np.array(y[6:9])
-    vtot=[v]
-    ptot=[p]
-    atot=[[0,0,0]]
-    #calcul des constantes dans l acceleration
-    c=(rho*np.pi*d**2)/8*m
-    # make sure that the server is using >=3.8
-    # https://peps.python.org/pep-0572/
-    if(normw := np.linalg.norm(w)):
-        cm=1/(2+1.96/(d*normw))
-    #Fm=cm*c*np.linalg.norm(v)**2*np.cross(v,w)
-    else:
-        cm=0
-    for i in range(int(t/step)):
-        Fm=cm*c*np.linalg.norm(v)**2*np.cross(v,w) #--#
-        Ft=cd*c*np.linalg.norm(v)*v
-        a=Fd+Ft
-        print(a) 
-        v=nextstep(v,a,step)        
-        vtot=np.append(vtot,[v],axis=0)
-        p=nextstep(p,v,step)
-        ptot=np.append(ptot,[p],axis=0)
-        atot=np.append(atot,[a],axis=0)
-        if(p[2]<0):
-            break
-    print("subtest")
-    print(vtot,vtot.shape)
-    print("subsubtest")
-    print(ptot,ptot.shape)
-    return ptot,vtot,atot
-def nextstep(v,a,step):
-    return v+a*step
-poisson,vache,ecrevisse=oderhs(10,y)
+    alpha=np.array([0,0,0])
+        #a(v)
+    Fm=cm*c*np.linalg.norm(v)**2*np.cross(v,w)/np.cross(v,w) #--#
+    Ft=cd*c*np.linalg.norm(v)*v
+    a=Fd+Ft
+    return np.concatenate((v,a,alpha))  
+# Nextstep aka euler w/o loop
+"""
+# unecesery work to make beautifull graph
+poisson,vache,ecrevisse=euler(5,y)
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt 
 ax=plt.axes(projection='3d')
@@ -83,6 +104,7 @@ x=poisson[:,0]
 y=poisson[:,1]
 z=poisson[:,2]
 ax.plot3D(x,y,z,'red')
+'''
 x=vache[:,0]
 y=vache[:,1]
 z=vache[:,2]
@@ -92,5 +114,6 @@ y=ecrevisse[:,1]
 z=ecrevisse[:,2]
 ax.plot3D(x,y,z,'green')
 
-
+'''
 plt.show()
+"""
