@@ -22,7 +22,9 @@ def oderhs(t,y):
     alpha=[0,0,0]
     return np.concatenate((v,a,alpha)) 
 def event(t,y):
+    print(y)
     return 0<y[2]
 event.terminal = True
 y=[10,10,10,5,5,5,0,4,3]
-print(solve_ivp(oderhs,[0,10],y,events=event))
+#u=solve_ivp(oderhs,[0,10],y,events=event)
+
