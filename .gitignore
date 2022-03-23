@@ -1,3 +1,3 @@
 # fichier a pas supprimer
-___pycache__
-src/__pycache__
+*___pycache__/
+
