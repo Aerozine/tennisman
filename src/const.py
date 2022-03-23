@@ -21,4 +21,5 @@ g=-9.81
 e=-0.7
 # size of any ndarray for accuracy and perf
 import numpy as np
-dtype=np.float16
+dtype=np.float32
+#pour plus de lenteur et de precision float64  fait le travail , pour l instant c est inutile de l utiliser
