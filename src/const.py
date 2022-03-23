@@ -21,4 +21,4 @@ g=-9.81
 e=-0.7
 # size of any ndarray for accuracy and perf
 import numpy as np
-dtype=np.float32
+dtype=np.float16
