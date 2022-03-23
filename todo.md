@@ -1,7 +1,6 @@
 # chose a faire
 
-- nettoyer tout le bordel sur le git
+- faire la methode du Jacobien 
 
-- ranger par dossier(milestone-rapport)
-
+- partitionner le code  et integrer correctement le 2e fichier
 - creer un requirements.txt pour python et Rmd

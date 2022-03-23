@@ -1,5 +1,7 @@
 import numpy as np
 import darktheme
+from scipy.integrate import solve_ivp
+
 ########################################
 # diametre de la balle
 global d
@@ -117,3 +119,8 @@ ax.plot3D(x,y,z,'green')
 '''
 plt.show()
 """
+def event(t,y):
+    return 0>y[2]
+event.terminal = True
+
+print(solve_ivp(oderhs,(0,10),y[:3],events=event))
