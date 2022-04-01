@@ -43,9 +43,10 @@ def oderhs(t,y):
     dy[3:6]=a
     return dy 
 def  trajectoireFiletHorizontal(yInit,T):
-    precision=0.001
+    precision=0.000001
     H=precision
     rebond=0
+    print(T/precision)
     for i in range(int(T/precision)):
         yInit=yInit+precision*oderhs(T,yInit)
         if yInit[2]<=hf and yInit[0]<=0:
@@ -57,7 +58,7 @@ def  trajectoireFiletHorizontal(yInit,T):
     return yInit
 ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00])            
 import time
-print(0.001)
+print(0.000001)
 start_time= time.time() # definit le temps initial
 a=trajectoireFiletHorizontal(ytest,0.8)     
 print(time.time()-start_time)

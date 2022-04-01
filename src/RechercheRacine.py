@@ -4,9 +4,9 @@ import numpy as np
 def bissection(f,x0,x1,tol):
     a = x0 
     b = x1
-   load=open(__main__.__file__,"r")
-   print(load)
-   load.close()
+   #load=open(__main__.__file__,"r")
+   #print(load)
+   #load.close()
     fx0=f(x0)
     fx1=f(x1)
     if(not fx0):
