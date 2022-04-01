@@ -18,12 +18,21 @@ def oderhs(t,y):
     a=Fd+Ft+Fm
     alpha=np.zeros(3)
     return np.concatenate((v,a,alpha))
-def euler(f,T,x):
-    # add same proto as scipy_ivp
-    #step/None = Jacobian
-    return x+step*f(T,x) 
+# fun ,tspan,y0,events steps
+def euler(fun, t_span, y0,events=None ):
+    data=np.array([0,0,0],dtype=cst.dtype)
+    t=t_span[0]
+    while(events):
+        y0=y0*fun(t,y0)*cst.step
+        t=t+cst.step
+        data=np.append([data],nd.array(
+    return data
 
 def  trajectoireFiletHorizontal(yInit,T,bouncing=True):
+    step=int(T/precision))
+    array=euler(oderhs,T,yInit)
+    for i in range(len(array)):
+        if  yInit[2]<=hf and yInit
     precision=0.000001
     H=precision
     rebond=0
@@ -39,6 +48,11 @@ def  trajectoireFiletHorizontal(yInit,T,bouncing=True):
 
 
 
-ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00])            
-a=trajectoireFiletHorizontal(ytest,0.8)     
-print(a)
+ ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00])            
+print(euler(oderhs, 
+
+
+ #import time
+#start_time= time.time() # definit le temps initial
+ #a=trajectoireFiletHorizontal(ytest,0.8)     
+ #print(start_time-time.time())

@@ -23,7 +23,7 @@ dans cette section nous allon développer absolument rien dutout
 	et non pas de bol toujours rien d utile 
 
 \# test  
-
+__salut__
 ***Le latex , c est pas ouf mais le Rmarkdown , c est pété*** 
 
 $\sqrt{2}$=`r sqrt(2)`
@@ -44,4 +44,8 @@ for i in range(len(x)):
 	    y[i] = np.cos(x[i])
 plt.plot(x,y)
 plt.show()
+```
+```{python , echo=TRUE}
+for i in range(10):
+	print("salut")
 ```
