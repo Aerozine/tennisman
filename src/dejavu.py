@@ -1,5 +1,4 @@
 import numpy as np
-import darktheme
 from scipy.integrate import solve_ivp
 
 ########################################
@@ -120,7 +119,8 @@ ax.plot3D(x,y,z,'green')
 plt.show()
 """
 def event(t,y):
-    return 0>y[2]
+    return 0<y[2]
 event.terminal = True
 
-print(solve_ivp(oderhs,(0,10),y[:3],events=event))
+print(solve_ivp(oderhs,(0,40),y).y[:][-1])
+print(solve_ivp(oderhs,(0,40),y).y.shape)

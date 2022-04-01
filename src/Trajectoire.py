@@ -18,7 +18,7 @@ hf=1
  #gravitation [g] 9,81 m/s^2
 g=9.81 
  #coefficientderestitution [e] 0.5 0.8
-e=-0.7
+e=-0.8
 # calcul de constante utile au calcul 
 import numpy as np 
 Fp = np.array([0,0,-m*g])
@@ -43,7 +43,7 @@ def oderhs(t,y):
     dy[3:6]=a
     return dy 
 def  trajectoireFiletHorizontal(yInit,T):
-    precision=0.000001
+    precision=0.001
     H=precision
     rebond=0
     for i in range(int(T/precision)):
@@ -53,8 +53,12 @@ def  trajectoireFiletHorizontal(yInit,T):
         if yInit[2]<=0 and rebond<1:
             yInit[5]=e*yInit[5]
             rebond=rebond +1
-    Y=(yInit[0],yInit[1],yInit[2])
-    return Y
+    #Y=(yInit[0],yInit[1],yInit[2])
+    return yInit
 ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00])            
+import time
+print(0.001)
+start_time= time.time() # definit le temps initial
 a=trajectoireFiletHorizontal(ytest,0.8)     
+print(time.time()-start_time)
 print(a)

@@ -1,4 +1,4 @@
-global d,m, rho , cd , w , h0 , g , hf,e 
+global d,m, rho , cd , w , h0 , g , hf,e , precision
 #diametredelabale [d] 0,065
 d = 0.065
 #massedelaballe [m] 0,058
@@ -23,3 +23,4 @@ e=-0.7
 import numpy as np
 dtype=np.float32
 #pour plus de lenteur et de precision float64  fait le travail , pour l instant c est inutile de l utiliser
+precision=0.001
