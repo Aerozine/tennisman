@@ -6,7 +6,6 @@ from scipy.integrate import solve_ivp
 c=(cst.rho*np.pi*cst.d**2)/(8*cst.m)
 
 def oderhs(t,y):
-    print(y)
     #print(y) 
     p=np.array(y[:3],dtype=cst.dtype)
     v=np.array(y[3:6],dtype=cst.dtype)
