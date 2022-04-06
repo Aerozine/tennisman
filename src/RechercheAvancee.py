@@ -63,7 +63,7 @@ def rechercheHauteur(y,cibleRebond):
     tmp=lambda x : Getciblerebond(np.concatenate((y[:2],[x],y[3:9])),100)
     return ssqrt.bissection(tmp,2,3,cst.tol)
 def rechercheHauteur2(y,cibleHauteur):
-    tmp=lambda x = Getciblehauteur(np.concatenate((y[:2],[x],y[3:9])),100)
+    tmp=lambda x = Getciblehauteur(np.concatenate(((y[:2],[x],y[3:9])),100)
     return ssqrt.bissection(tmp,2,3,cst.tol)
 #recherche en fonction de l angle
 def rechercheangle(y0,ciblerebond):
