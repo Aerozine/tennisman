@@ -55,12 +55,12 @@ def  trajectoireFiletHorizontal(yInit,T,bouncing=True):
         #dans le cas d un deuxieme rebond il suffit de repartir de la derniere position et de redefinir la vitesse verticale comme multiplié par e 
     if bouncing:
         pos[-1][5]=pos[-1][5]*cst.e
-        # pos shape donne la taile du tableau or le premier element contient la pos initale donc on a eu shape-1 tour de boucle
+        #pos shape donne la taile du tableau or le premier element contient la pos initale donc on a eu shape-1 tour de boucle
         return trajectoireFiletHorizontal(pos[-1][:],T-(pos.shape[0]-1)*cst.precision,bouncing=False)
     return tuple(pos[-1][:3]) 
 def evenement(t,y):
     return 0>y[2]
 evenement.terminal=True
-ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00],dtype=cst.dtype)            
-a=trajectoireFiletHorizontal(ytest,0.8)     
-print(a) # la premiere valeur doit etre +- = a 16.678
+#ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00],dtype=cst.dtype)            
+#a=trajectoireFiletHorizontal(ytest,0.8)     
+#print(a) # la premiere valeur doit etre +- = a 16.678

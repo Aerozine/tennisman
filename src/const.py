@@ -23,5 +23,5 @@ e=-0.7
 import numpy as np
 dtype=None
 #pour plus de lenteur et de precision float64  fait le travail , pour l instant c est inutile de l utiliser
-precision=0.0001
-tol = 0.01
+precision=0.000001
+tol = 0.000001

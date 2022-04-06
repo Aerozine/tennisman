@@ -6,7 +6,6 @@ from scipy.integrate import solve_ivp
 c=(cst.rho*np.pi*cst.d**2)/(8*cst.m)
 
 def oderhs(t,y):
-    print("bonjour")
     p=np.array(y[:3],dtype=cst.dtype)
     v=np.array(y[3:6],dtype=cst.dtype)
     w=np.array(y[6:9],dtype=cst.dtype)
@@ -22,26 +21,25 @@ def oderhs(t,y):
     alpha=np.zeros(3)
     return np.concatenate((v,a,alpha))
 
-def  trajectoireFiletHorizontal(yInit,T,bouncing=True):
-   # if method == euler : 
-    #freq=1/cst.precision
-    tmp=np.linspace(0,T,int(T/cst.precision))
-    data=solve_ivp(oderhs,[0,T],yInit,t_eval=tmp,events=evenement,vectorized=False)#,rtol=cst.precision,atol=cst.precision**0.01)
-    pos=data.y
+def  trajectoireFiletHorizontal(yInit,T,bouncing=True,event_array=None):
+    tmp=np.arange(0,T,cst.precision)
+    pos=solve_ivp(oderhs,(0,T),yInit,t_eval=tmp,events=evenement,rtol=cst.precision,atol=cst.precision**0.01)
     #pos=method(oderhs,[0,T],yInit,events=evenement) 
+    """
     for i in range(pos.shape[1]):
         # si on n as pas encore passé le filet(la balle est du meme coté que la pos init)
         # si la posz de la balle est plus petite que le filet et que la balle descend
         # cela ne sert a rien , la balle ne passera pas le filet 
         if( pos[0][i]*pos[0][0]<0 and pos[5][i]>0 and pos[2][i]>cst.hf  ):
             return(0,0,0)
+            """
     #dans le cas d un deuxieme rebond il suffit de repartir de la derniere position et de redefinir la vitesse verticale comme multiplié par e 
     if( bouncing ):
-        pos[-1][5]=pos[-1][5]*cst.e
+        pos.y[5,-1]=pos.y[5,-1]*cst.e
         # pos shape donne la taile du tableau or le premier element contient la pos initale
-        return trajectoireFiletHorizontal(pos[-1][:],T-(pos.shape[0]-1)*cst.precision,bouncing=False)
-    return tuple(pos[-1][:3]) 
-
+        return trajectoireFiletHorizontal(pos.y[:,-1],T-(pos.y.shape[1]-1)*cst.precision,bouncing=False)
+    print(pos.y.shape)
+    return pos.y[:3,-1] 
 def evenement(t,y):
     return y[2]
 evenement.terminal=True
