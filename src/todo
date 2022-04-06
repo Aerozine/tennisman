@@ -6,3 +6,5 @@ hauteur, statut = rechercheHauteur(y0,cibleRebond)
 hauteur, statut = rechercheHauteur2(y0,cibleHauteur)
 omega, statut = rechercheOmega(y0,cibleRebond)
 omega, statut = rechercheOmega2(y0,cibleHauteur)
+prendre en compte la courbure du filet 
+ameliorer l efficacite de Euler 

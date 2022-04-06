@@ -54,8 +54,8 @@ def  trajectoireFiletHorizontal(yInit,T):
         if yInit[2]<=0 and rebond<1:
             yInit[5]=e*yInit[5]
             rebond=rebond +1
-    #Y=(yInit[0],yInit[1],yInit[2])
-    return yInit
+    Y=(yInit[0],yInit[1],yInit[2])
+    return Y 
 ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00])            
 import time
 print(0.000001)
