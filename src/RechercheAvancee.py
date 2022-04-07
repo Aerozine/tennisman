@@ -1,6 +1,6 @@
 import numpy as np
 import RechercheRacine as ssqrt
-import Trajectron as shot
+import Traject as shot
 import const as cst
 from scipy.integrate import solve_ivp
 """
@@ -13,6 +13,11 @@ hauteur, statut = rechercheHauteur2(y0,cibleHauteur)
 omega, statut = rechercheOmega(y0,cibleRebond)
 omega, statut = rechercheOmega2(y0,cibleHauteur) 
 """
+def IsOnTheGround(t,y):
+    if(t>10e-4):
+        return y[2]
+    else:
+        return 1
 #avec un y t fixe retourne la pos x de l impact
 def Getciblerebond(y,t):
     tmp=np.arange(0,t,cst.precision)
@@ -23,17 +28,21 @@ def Getciblerebond(y,t):
 # avec un y t fixe retourne la poz a la ligne de fond 
 def Getciblehauteur(y,t,bouncing=True ):
     tmp=np.arange(0,t,cst.precision)
-    IsOnTheGround= lambda t,y : y[2]
+    #IsOnTheGround= lambda t,y : y[2]
     IsOnTheGround.terminal=True
-    IsAtTheEnd=lambda t,y : 11.89-y[0]
+    IsAtTheEnd=lambda t,y : y[0]-11.89
     IsAtTheEnd.terminal=True
+    Hollowevent=lambda t,y : 1
+    #if(bouncing==False):
+    #data =solve_ivp(shot.oderhs,(0,t),y,t_eval=tmp,events=(Hollowevent,IsAtTheEnd))
+    #else:
     data =solve_ivp(shot.oderhs,(0,t),y,t_eval=tmp,events=(IsOnTheGround,IsAtTheEnd))
     if(bouncing and data.y_events[0].size!=0):
-        print("il y a un rebond en ", data.y_events[0][0][:3])
         data.y_events[0][0][5]=data.y_events[0][0][5]*cst.e
-        return Getciblehauteur(data.y_events[0][0],t-data.t_events[0][0],h,bouncing=False )
-    return data.y_events[1][0]
-
+        return Getciblehauteur(data.y_events[0][0],t-data.t_events[0][0],bouncing=False )
+    if(data.y_events[0].size!=0):
+        return None
+    return data.y_events[1][0][2]
 #modifie l inclinaison sur l axe XZ
 def rotangle(pos,angle):
 # ici la composante en y ne joue en rien  elle est prit en entrée pour simplifier les tableau
@@ -42,7 +51,7 @@ def rotangle(pos,angle):
    return pos
 #definit la norme du vecteur 
 def multinorm(pos,number):
-    norm =np.norm(pos[3:6])
+    norm =np.linalg.norm(pos[3:6])
     if norm == 0:
         pos[3:6]=[0,0,0]
         return pos
@@ -51,11 +60,11 @@ def multinorm(pos,number):
     return pos
 #definit la norme du vecteur 
 def multiomega(pos,number):
-    norm = np.norm(pos[6:])
+    norm = np.linalg.norm(pos[6:])
     if norm == 0:
         pos[:6]=[0,0,0]
         return pos
-    unit=pos[6:]/np.norm(pos[6:])
+    unit=pos[6:]/np.linalg.norm(pos[6:])
     pos[6:]=unit*number 
     return pos
 #recherche en fonction du parametre hauteurinitiale
@@ -63,28 +72,28 @@ def rechercheHauteur(y,cibleRebond):
     tmp=lambda x : Getciblerebond(np.concatenate((y[:2],[x],y[3:9])),100)
     return ssqrt.bissection(tmp,2,3,cst.tol)
 def rechercheHauteur2(y,cibleHauteur):
-    tmp=lambda x = Getciblehauteur(np.concatenate(((y[:2],[x],y[3:9])),100)
+    tmp=lambda x : cibleHauteur - Getciblehauteur(np.concatenate((y[:2],[x],y[3:9])),100)
     return ssqrt.bissection(tmp,2,3,cst.tol)
 #recherche en fonction de l angle
 def rechercheangle(y0,ciblerebond):
     tmp=lambda x : Getciblerebond(rotangle(y0,x),100)
     return ssqrt.bissection(tmp,0,np.pi/2,cst.tol)
 def rechercheAngle2(y0,cibleHauteur):
-    tmp=lambda x = Getciblehauteur(rotangle(y0,x),100)
+    tmp=lambda x : cibleHauteur - Getciblehauteur(rotangle(y0,x),100)
     return ssqrt.bissection(tmp,0,np.pi/2,cst.tol)
 #recherche en fonction de la norme de omega
 def rechercheOmega(y0,cibleRebond):
     tmp=lambda x : Getciblerebond(multiomega(y0,x),100)
     return ssqrt.bissection(tmp,0,50,cst.tol)
 def rechercheOmega2(y0,cibleHauteur):
-    tmp=lambda x = Getciblehauteur(multiomega(y0,x),100)
+    tmp=lambda x : cibleHauteur - Getciblehauteur(multiomega(y0,x),100)
     return ssqrt.bissection(tmp,0,50,cst.tol)
 #recherche en fonction de la norme de vitesse
 def rechercheVitesse(y0,cibleRebond):
     tmp=lambda x : Getciblerebond(multinorm(y0,x),100)
     return ssqrt.bissection(tmp,0,50,cst.tol)
 def rechercheVitesse2(y0,cibleHauteur):
-    tmp=lambda x = Getciblehauteur(multinorm(y0,x),100)
+    tmp=lambda x : cibleHauteur - Getciblehauteur(multinorm(y0,x),100)
     return ssqrt.bissection(tmp,0,50,cst.tol)
 #ytest=np.array([-1.189e+01,  0.000e+00,  1.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00],dtype=cst.dtype)            
 #print(Getciblehauteur(ytest,0.8,1000,bouncing=True))
