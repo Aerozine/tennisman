@@ -88,10 +88,6 @@ A chqaue etape on recalcuera la hauteur. A la fin de toutes les repartitions , o
 
 Pour savoir la repartition de l energie on se base sur l equation suivante (ref) et on en deduit les equation suivant (ref) premettant de calculer les diferentes fluctuation.
 
-```{python valv}
-import grafik
-
-```
 <!--faire un graph repartition en fct de omega -->
 
 
