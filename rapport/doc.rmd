@@ -1,51 +1,90 @@
 ---
-title: "Comment flex efficacement"
-author: "Luke smith" 
-output:
-    pdf_document:
-              number_sections: true
+title:    |
+          | Introduction aux méthodes numériques et projet (PROJ0001):
+          | Modélisation de la trajectoire d'une balle de tennis 
+subtitle: | 
+          | Premier bachelier en sciences de l'ingénieur
+          | Année académique 2021-2022.Travail réalisé par:
+author:
+- Loic Delbarre (S215072)
+- Rafik Lourmathi (S212097)
+- Salman Guseynov (S216862)
+date: '`r Sys.setlocale("LC_TIME", "French"); gsub(" 0", " ",format(Sys.Date(), "Le %d %B %Y"))`'
+output: 
+  pdf_document:
+    number_section: true
 ---
-<!-- ce qu il y a audessus c est des meta data
-Et ici en dessous du latex pour flex
--->
-
-\tableofcontents
-\fontsize{8}{1}
+<!--metadata en YAML utilise par pandoc pour faire le document LaTeX -->
+<!--definition de la police et ajout d un saut de page-->
+\newpage
+\fontsize{12}{1} 
 \selectfont
-<!--\newpage
+
+# Question 1
+
+## méthode sécante 
+
+Nous avons donc implemente la methode de la secante et avons etudie les 3 cas qui peuvent se presenter a nous comme annonce dans l ennonce.Lorsque la secante converge et trouve un tuple conntenant les coordone du zero approxime.Dans le deuxieme cas,afin de ne pas diviser par zero dans l equation de la secante(ref) , on retourne un status d erreur.La methode de la secante ne nous permet pas d etre assure de la convergence de la fonction, c est pour cela que nous implementons un nombre d iteration maximum comme gardien de boucle.Si jamais la fonction n as pas converge apres le nombremax d iteration, la fonction en deduit qu il n y a pas convergence.On a choisit le nombre d iteration max comme etant de 100.On sait que la trajectoire d une balle de tennis sera parabolique donc en faisant cette methode cela converge rapidement.Dans le cadre de ce cours , nous etudons des trajectoire parabolique une vingtaine d iteration devraient etre suffisant mais au vu de la faible complexite nous avons mis 100.<!--Si la fonction etait chronophage, cela aurrait augmente le temps latence de recuperation du resultat.Par exemple si la fonction prennait une seconde , avec 100 iteration max  on aurrait 100 secondes si jamais on diverge.-->
+
+
+$$formule hyperswag$$
+
+<!-- ajouter un graph de la secante avec a chaque iteration le point et ensuite j explique et ajouter un tableau a cote si possible -->
+Voici un exemple(ref) d un graphique d une fonction que l on pourrait rencontrer lors de nos calcul de trajectoire.On remarque que avec 10 iteration on atteint assez rapidement une precision satisfaisante.
+
+## méthode de la bissection
+La technique de la bissection est plus efficace que la secante car elle assure la convergence lorsque les bornes sont de signes contraires et definie partout entre ses bornes.Si la fonction n est pas convergente on aurra une sortie d erreur.
+<!-- ajouter le gra-->
+
+# question2
+Afin de regrouper les differentes constantes utilise dans le projet. , nous les regroupons sous un fichier nome const.py .On remarque egalement la possibilite d une mise en evidence des differentes constante permetant d eviter le calcul de multiplication de constante a chaque iteration(ref)
+On a profite de la carracteristique dtype des `numpy.array` pour choisir le nombre de decimales dans le calcul si besoin.Pour stoquer les valeur dans Euler , i l a ete plus judicieux de allouer statiquement un tableau de la taille du nombre d etape maximale et de le reduire lorsque l evenement (si la balle touche le sol) est produit .Dans le cas oppose lorsque l on reallouait un tableau a chaque itteration avec `np.append` on a constate des pertes impresionantes de performance pour la realocation de grands tableau.Pour un tableau de 800000 case , changer de technique a reduit le temps de moitie.
+D une autre part nous avons implemente l utilisation solve\_ivp de scipy.au vu des valeurs par defaut et de leur precision nous avons decide de garder les valeur
+En optant pour la valeur de 0.001 pour
+rtol et la valeur 0.000001 pour atol , nous avons remarqué que avec ses valeur par defaut  aucun problème ne s est impose donc nous avons conserve ces parametres 
+
+<!-- ajouter un graph 3d on prends pas en compte le filet rebond-->
+
+<!--
+ echo false permet de ne pas montrer le code mais juste de diffuser l output
+
+#ajouter des equation peut etre utile pour expliquer certaines demarches
+#-> numeroter les figures
+#-> titre legende
+#-> axes 
+#referencer les figures pour chaques fct comme justification
 -->
-
-# bonjour 
-
-dans cette section nous allon développer absolument rien dutout 
-
-## sous section 
-	et non pas de bol toujours rien d utile 
-
-\# test  
-__salut__
-***Le latex , c est pas ouf mais le Rmarkdown , c est pété*** 
-
-$\sqrt{2}$=`r sqrt(2)`
-
-
-<!-- echo false permet de ne pas montrer le code mais juste de diffuser l output
-On peut **literalement** faire des dingueries en Rmarkdown 
-le cours de python par exemple :
--->
-
-
-```{python pyplot, echo=FALSE}
+```{python pyplot,out.width="300px", echo=FALSE}
 import numpy as np
 import matplotlib.pyplot as plt
 x=np.linspace(0,2*np.pi,200)
 y=np.zeros_like(x)
 for i in range(len(x)):
 	    y[i] = np.cos(x[i])
+plt.subplot(1,2,1)
 plt.plot(x,y)
+plt.subplot(1,2,2)
+plt.plot(y,x)
 plt.show()
+``` 
+
+# question3
+
+## comparaison des deux methodes
+En comparant solve\_ivp et euler on se rends compte assez rapidement de la difference de temps.
+solve\_ivp est instantane pour une precision de 10e-5 alors que euler prends déja 6secondes.Et pour une precision 10 fois plus petite, Euler augmente drastiquement vers 60 alors que Solve\_ivp reste instantane.
+## 
+Les eventment choisi pour l utilisation de solve\_ivp on ete choisi de maniere analogique et non discrete car solve\_ivp est capable d utiliser ces resultat pour converger plus rapidement et plus precisement.
+
+
+
+
+a titre de comparaison :
+<!-- tableau de vitesse-->
+Vu que la variation de vitesse angulaire est inexistente , on s est permi d hardcoder des zero dans le calcul `oderhs` 
+
+```{python pyplot2,out.width="300px",echo=FALSE}
+import Trajectron
 ```
-```{python , echo=TRUE}
-for i in range(10):
-	print("salut")
-```
+
+

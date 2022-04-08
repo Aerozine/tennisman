@@ -36,18 +36,14 @@ step=0.01
 global Fd 
 Fd = np.array([0,0,g])
 
-########################################
 #constante d entree
 # x y z vx vy vz wx wy wz
-y=[10,10,10,5,5,5,0,4,3]
-#constante d euler
+y=[-11.89,0,2,50,1,0,30,15,0]
 c=(rho*np.pi*d**2)/8*m
 if(normw := np.linalg.norm(w)):
     cm=1/(2+1.96/(d*normw))
-#Fm=cm*c*np.linalg.norm(v)**2*np.cross(v,w)
 else:
     cm=0
-
 def euler(t,y):
     #prends les valeurs initiales et joue avec odehrs pour lui calculer la n+1
     #p pour position
@@ -95,7 +91,6 @@ def oderhs(t,y):
     a=Fd+Ft
     return np.concatenate((v,a,alpha))  
 # Nextstep aka euler w/o loop
-"""
 # unecesery work to make beautifull graph
 poisson,vache,ecrevisse=euler(5,y)
 from mpl_toolkits import mplot3d
@@ -117,7 +112,6 @@ ax.plot3D(x,y,z,'green')
 
 '''
 plt.show()
-"""
 def event(t,y):
     return 0<y[2]
 event.terminal = True

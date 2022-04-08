@@ -21,18 +21,17 @@ def oderhs(t,y):
     alpha=np.zeros(3)
     return np.concatenate((v,a,alpha))
 
-def  trajectoireFiletHorizontal(yInit,T,bouncing=True,event_array=None):
+def  trajectoireFiletHorizontal(yInit,T,bouncing=True):
     tmp=np.arange(0,T,cst.precision)
-    pos=solve_ivp(oderhs,(0,T),yInit,t_eval=tmp,events=evenement,rtol=cst.precision,atol=cst.precision**0.01)
+    pos=solve_ivp(oderhs,(0,T),yInit,t_eval=tmp,events=evenement,rtol=cst.rtol,atol=cst.atol)
     #pos=method(oderhs,[0,T],yInit,events=evenement) 
-    """
     for i in range(pos.shape[1]):
         # si on n as pas encore passé le filet(la balle est du meme coté que la pos init)
         # si la posz de la balle est plus petite que le filet et que la balle descend
         # cela ne sert a rien , la balle ne passera pas le filet 
-        if( pos[0][i]*pos[0][0]<0 and pos[5][i]>0 and pos[2][i]>cst.hf  ):
+        if( pos[0][i]*pos[0][0]>0 and pos[5][i]>0 and pos[2][i]>cst.hf  ):
+# modif cst.h pour prendre en compte cubicspline 
             return(0,0,0)
-            """
     #dans le cas d un deuxieme rebond il suffit de repartir de la derniere position et de redefinir la vitesse verticale comme multiplié par e 
     if( bouncing ):
         pos.y[5,-1]=pos.y[5,-1]*cst.e

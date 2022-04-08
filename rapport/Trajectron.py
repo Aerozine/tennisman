@@ -80,5 +80,6 @@ z=a[:,2]
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt 
 ax=plt.axes(projection='3d')
+ax. view_init(elev=26, azim=-88)
 ax.plot3D(x,y,z,'red')
 plt.show()

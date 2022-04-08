@@ -1,4 +1,4 @@
-global d,m, rho , cd , w , h0 , g , hf,e , precision , tol , bistol , atol , rtol
+global d,m, rho , cd , w , h0 , g , hf,e , precision , tol , bistol
 #diametredelabale [d] 0,065
 d = 0.065
 #massedelaballe [m] 0,058
@@ -26,5 +26,3 @@ dtype=None
 precision=  0.0001
 tol =       0.000001
 bistol=     0.000001
-rtol=  0.0001
-atol=  0.000001
