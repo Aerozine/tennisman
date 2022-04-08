@@ -1,1 +1,1 @@
-Rscript -e "rmarkdown::render('doc.rmd.1','pdf_document')"
+Rscript -e "rmarkdown::render('doc.rmd','pdf_document')"
