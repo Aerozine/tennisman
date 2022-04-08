@@ -46,6 +46,11 @@ def show1():
         z[a]=(y[a]-y[a-1])/prec
         a+=1
     z[0]=0
+    plt.plot(x,y,label="Getciblehauteur")
+    plt.plot(x,z,label="dérivée de Getciblehauteur")
+    plt.xlabel("norme de la vitesse")
+    plt.ylabel("hauteur atteinte")
+    plt.legend()
     plt.plot(x,y)
     plt.plot(x,z)
     plt.show()
@@ -61,6 +66,10 @@ def show():
         z[a]=(y[a]-y[a-1])/prec
         a+=1
     z[0]=0
-    plt.plot(x,y)
-    plt.plot(x,z)
+    plt.plot(x,y,label="Getciblehauteur")
+    plt.plot(x,z,label="dérivée de Getciblehauteur")
+    plt.xlabel("norme de la vitesse")
+    plt.ylabel("hauteur atteinte")
+    plt.legend()
     plt.show()
+

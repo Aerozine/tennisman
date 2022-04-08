@@ -78,14 +78,14 @@ from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt 
 def show():
     a=trajectoirecomplete(ytest,1)     
-    plt.xlabel("x")
-    plt.ylabel("y")
-    plt.ylabel("z")
     plt.title("trajectoire")
     x=a[:,0]
     y=a[:,1]
     z=a[:,2]
     ax=plt.axes(projection='3d')
     ax. view_init(elev=26, azim=-88)
+    ax.set_xlabel('X-axis', fontweight ='bold')
+    ax.set_ylabel('Y-axis', fontweight ='bold')
+    ax.set_zlabel('Z-axis', fontweight ='bold')
     ax.plot3D(x,y,z,'red')
     plt.show()
