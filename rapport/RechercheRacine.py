@@ -52,26 +52,32 @@ def secante(f, x0, x1, tol):
         iteration_max+=1
         a=b
         b=f(x1)
+        plt.plot(x1,b,"r*")
     print("il y a une erreur car la fonction ne converge pas")
     return [18,-1]
 def f(x):
     return x**3+1
+
+
+
+
+
 def show():
     plt.subplot(1,2,1)
-    x=np.linspace(-10,10,10000)
+    x=np.linspace(-5,10,10000)
     plt.xlabel("x")
     plt.ylabel("y")
     plt.title("secante")
     plt.plot(x,f(x),label="x³+1")
-    secante(f,-10,10,10e-4)
+    secante(f,-5,10,10e-4)
     plt.legend() 
     plt.subplot(1,2,2)
-    x=np.linspace(-10,10,10000)
+    x=np.linspace(-5,10,10000)
     plt.xlabel("x")
     plt.ylabel("y")
     plt.title("bissection")
     plt.plot(x,f(x),label="x³+1")
-    bissection(f,-4,7,10e-4)
+    bissection(f,-5,10,10e-4)
     plt.legend() 
     plt.show()
 

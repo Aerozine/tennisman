@@ -11,8 +11,9 @@ author:
 - Salman Guseynov (S216862)
 date: '`r Sys.setlocale("LC_TIME", "French"); gsub(" 0", " ",format(Sys.Date(), "Le %d %B %Y"))`'
 output: 
-  pdf_document:
+  pdf_document: 
     number_section: true
+    fig_caption: true
 ---
 <!--metadata en YAML utilise par pandoc pour faire le document LaTeX -->
 <!--definition de la police et ajout d un saut de page-->
@@ -34,7 +35,8 @@ Voici un exemple(ref) d un graphique d une fonction que l on pourrait rencontrer
 ## méthode de la bissection
 La technique de la bissection est plus efficace que la secante car elle assure la convergence lorsque les bornes sont de signes contraires et definie partout entre ses bornes.Si la fonction n est pas convergente on aurra une sortie d erreur.
 
-```{python diffbis,out.width="300px",echo=FALSE}
+```{python diffbis,out.width="300px",echo=FALSE,fig.cap="\\label{fig:diffbis}difference bissection et secante"}
+
 import RechercheRacine
 RechercheRacine.show()
 ```
@@ -42,13 +44,14 @@ RechercheRacine.show()
 # question2
 
 Afin de regrouper les differentes constantes utilise dans le projet. , nous les regroupons sous un fichier nome const.py .On remarque egalement la possibilite d une mise en evidence des differentes constante permetant d eviter le calcul de multiplication de constante a chaque iteration(ref)
+ici la fig \ref{fig:diffbis}
 On a profite de la carracteristique dtype des `numpy.array` pour choisir le nombre de decimales dans le calcul si besoin.Pour stoquer les valeur dans Euler , i l a ete plus judicieux de allouer statiquement un tableau de la taille du nombre d etape maximale et de le reduire lorsque l evenement (si la balle touche le sol) est produit .Dans le cas oppose lorsque l on reallouait un tableau a chaque itteration avec `np.append` on a constate des pertes impresionantes de performance pour la realocation de grands tableau.Pour un tableau de 800000 case , changer de technique a reduit le temps de moitie.
 D une autre part nous avons implemente l utilisation solve\_ivp de scipy.au vu des valeurs par defaut et de leur precision nous avons decide de garder les valeur
 En optant pour la valeur de 0.001 pour
 rtol et la valeur 0.000001 pour atol , nous avons remarqué que avec ses valeur par defaut  aucun problème ne s est impose donc nous avons conserve ces parametres 
 
-$$\ddot x\cdot m= F_{g}+F_{d}+F_{m}$$
-$$\ddot x = \rho\cdot\pi\cdot\frac{d^{2}}{8}\cdot\|\dot x\|^{2}(\frac{C_{m}}{m}+\frac{C_{d}}{m})-\frac{F_{g}}{m}$$
+<!--$$\ddot x\cdot m= F_{g}+F_{d}+F_{m}$$
+$$\ddot x = \rho\cdot\pi\cdot\frac{d^{2}}{8}\cdot\|\dot x\|^{2}(\frac{C_{m}}{m}+\frac{C_{d}}{m})-\frac{F_{g}}{m}$$-->
 $$\ddot x = \frac{\rho\cdot\pi}{m}\cdot\frac{d^{2}}{8}\cdot\|\dot x\|^{2}(\frac{1}{2+1.96\frac{\dot x}{\|w\|\cdot d}}+C_{d})-g$$
 <!-- ajouter un graph 3d on prends pas en compte le filet rebond-->
 <!--
@@ -71,7 +74,7 @@ solve\_ivp est instantane pour une precision de 10e-5 alors que euler prends dé
 
 On a decide de prendre un argument non obligatoire a la fonction `trajectoirefilethorizontal` pour gerer le cas ou on a un rebond de facon recursive.En effet , un rebond peut etre considere conmme le point de depart d une nouvelle trajectoire.L avantage de cette technique , c est quelle permet d etre modulaire au niveau du rebond, si l on decide de ne plus prendre en compte le rebond , on ne devra pas changer de fonction.
 
-Les eventment choisi pour l utilisation de solve\_ivp on ete choisi de maniere analogique et non discrete car solve\_ivp est capable d utiliser ces resultat pour converger plus rapidement et plus precisement.
+Les eventment choisi pour l utilisation de solve\_ivp on ete choisi de maniere analogique et non discrete car `solve_ivp` est capable d utiliser ces resultat pour converger plus rapidement et plus precisement.
 
 Pour le choix des evenement,pour la prise en compte du filet , notre choix s est porté sur `CubicSpline` et comme `bc_type` nous avons choisit le type natural pour un resultat pour 
 
@@ -86,8 +89,12 @@ On a pris en compte que la direction de la vitesse angulaire etait donne en entr
 Nous decidons de calculer la hauteur pour chaque repartition avec une etape de 10e-2 .
 A chqaue etape on recalcuera la hauteur. A la fin de toutes les repartitions , on essayera de retourner la repartition qui permet de trouver la valeur h la plus elevee.Pour l etape , nous avons choisis 10e-2 .Avec 10e-2 on fait 100 foi s des tours de boucle ce qui est la valeur minimale pour avoir une valeur en pourcentage 
 
-Pour savoir la repartition de l energie on se base sur l equation suivante (ref) et on en deduit les equation suivant (ref) premettant de calculer les diferentes fluctuation.
-
+Pour savoir la repartition de l energie on se base sur l equation suivante   premettant de calculer les diferentes fluctuation.
+```{python ,derivehauteur,out.width="300px",echo=FALSE,fig.cap="\\label{fig:derivehauteur}test"}
+import grafik
+grafik.show1()
+```
+Voici ici  \ref{fig:derivehauteur} un graph de la hauteur finale en fonction de la vitesse. 
 <!--faire un graph repartition en fct de omega -->
 
 
