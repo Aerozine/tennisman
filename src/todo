@@ -1,10 +1,2 @@
-angle, statut = rechercheAngle(y0,cibleRebond)
-angle, statut = rechercheAngle2(y0,cibleHauteur)
-normeVitesse, statut = rechercheVitesse(y0,cibleRebond)
-normeVitesse, statut = rechercheVitesse2(y0,cibleHauteur)
-hauteur, statut = rechercheHauteur(y0,cibleRebond)
-hauteur, statut = rechercheHauteur2(y0,cibleHauteur)
-omega, statut = rechercheOmega(y0,cibleRebond)
-omega, statut = rechercheOmega2(y0,cibleHauteur)
-prendre en compte la courbure du filet 
 ameliorer l efficacite de Euler 
+faire une heapmap avec l angle

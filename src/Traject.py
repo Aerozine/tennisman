@@ -41,6 +41,7 @@ def  trajectoireFiletHorizontal(yInit,T,bouncing=True):
 def evenement(t,y):
     return y[2]
 evenement.terminal=True
+
 #ytest=[-1.18900000e+01 ,0.00000000e+00, 2.00000000e+00, 4.38912226e+01, 8.77824453e-01  ,0.00000000e+00  ,3.00000000e-03,  1.50000000e-03,    0.00000000e+00]
 #ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00],dtype=cst.dtype)            
 #import time

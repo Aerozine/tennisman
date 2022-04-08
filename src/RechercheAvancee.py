@@ -3,6 +3,7 @@ import RechercheRacine as ssqrt
 import Traject as shot
 import const as cst
 from scipy.integrate import solve_ivp
+from scipy.interpolate import CubicSpline
 """
 angle, statut = rechercheangle(y0,ciblerebond)
 angle, statut = rechercheAngle2(y0,cibleHauteur)
@@ -18,6 +19,15 @@ def IsOnTheGround(t,y):
         return y[2]
     else:
         return 1
+def FiletCourbe(t,y):
+    x=y[0]        
+    xp = (-9.144,0,9.144)
+    yp = (1.07,0.914,1.07)
+    cs = CubicSpline(xp,yp,bc_type='natural')
+    if(y[0]<10e-6 and y[2]>cs(x)):
+        return 1 
+    return 0 
+FiletCourbe.terminal=True
 #avec un y t fixe retourne la pos x de l impact
 def Getciblerebond(y,t):
     tmp=np.arange(0,t,cst.precision)
@@ -31,11 +41,11 @@ def Getciblehauteur(y,t,bouncing=True ):
     IsOnTheGround.terminal=True
     IsAtTheEnd=lambda t,y : y[0]-11.89
     IsAtTheEnd.terminal=True
-    data =solve_ivp(shot.oderhs,(0,t),y,t_eval=tmp,events=(IsOnTheGround,IsAtTheEnd))
+    data =solve_ivp(shot.oderhs,(0,t),y,t_eval=tmp,events=(IsOnTheGround,IsAtTheEnd,FiletCourbe))
     if(bouncing and data.y_events[0].size!=0):
         data.y_events[0][0][5]=data.y_events[0][0][5]*cst.e
         return Getciblehauteur(data.y_events[0][0],t-data.t_events[0][0],bouncing=False )
-    if(data.y_events[0].size!=0):
+    if(data.y_events[1].size==0):
         return None
     return data.y_events[1][0][2]
 #modifie l inclinaison sur l axe XZ
@@ -65,7 +75,7 @@ def multiomega(pos,number):
 #recherche en fonction du parametre hauteurinitiale
 def rechercheHauteur(y,cibleRebond):
     tmp=lambda x : Getciblerebond(np.concatenate((y[:2],[x],y[3:9])),100)
-    return ssqrt.bissection(tmp,2,3,cst.tol)
+    return ssqrt.bissection(tmp,5,10,cst.tol)
 def rechercheHauteur2(y,cibleHauteur):
     tmp=lambda x : cibleHauteur - Getciblehauteur(np.concatenate((y[:2],[x],y[3:9])),100)
     return ssqrt.bissection(tmp,1,10,cst.tol)

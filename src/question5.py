@@ -50,10 +50,9 @@ def methodemagique(pos,dirv,dirw,t,E):
    if(a==100):
        print("error no None")
        return 0
-   return ssqrt.bissection(tmp,a,60,cst.bistol)
+   return ssqrt.bissection(tmp,a,80,cst.bistol)
 starttime=time.time()
 u=meilleur_coup(70.0,[1.0,0.0,0.0],[0.0,1.0,0.0],10.0)  
 g=methodemagique(np.array([-11.89,0,2]),np.array([1,0,0]),np.array([0,1,0]),10,70)
-print(time.time()-starttime)
-print(u)
+
 

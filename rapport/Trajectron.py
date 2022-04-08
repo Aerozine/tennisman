@@ -73,13 +73,19 @@ def evenement(t,y):
 evenement.terminal=True
 #ytest=[-1.18900000e+01 ,0.00000000e+00, 2.00000000e+00, 4.38912226e+01, 8.77824453e-01  ,0.00000000e+00  ,3.00000000e-03,  1.50000000e-03,    0.00000000e+00]
 ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00],dtype=cst.dtype)            
-a=trajectoirecomplete(ytest,1)     
-x=a[:,0]
-y=a[:,1]
-z=a[:,2]
+
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt 
-ax=plt.axes(projection='3d')
-ax. view_init(elev=26, azim=-88)
-ax.plot3D(x,y,z,'red')
-plt.show()
+def show():
+    a=trajectoirecomplete(ytest,1)     
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.ylabel("z")
+    plt.title("trajectoire")
+    x=a[:,0]
+    y=a[:,1]
+    z=a[:,2]
+    ax=plt.axes(projection='3d')
+    ax. view_init(elev=26, azim=-88)
+    ax.plot3D(x,y,z,'red')
+    plt.show()
