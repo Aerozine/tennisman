@@ -27,15 +27,15 @@ def printgraph(i):
     plt.axvline(0)
     plt.axvline(11.89)
     #plt.plot(0,11.89)
-for i in x :
-    y[a]=ads.Getciblehauteur(ads.multinorm(ytest,i),20)
-    print(a)
-    if(ads.Getciblehauteur(ads.multinorm(ytest,i),20)==-1):
-        y[a]=None
-    #    printgraph(i)
-    z[a]=(y[a]-y[a-1])/prec
-    a+=1
-z[0]=0
-plt.plot(x,y)
-plt.plot(x,z)
-plt.show()
+def show():
+    for i in x :
+        y[a]=ads.Getciblehauteur(ads.multinorm(ytest,i),20)
+        if(ads.Getciblehauteur(ads.multinorm(ytest,i),20)==-1):
+            y[a]=None
+        #    printgraph(i)
+        z[a]=(y[a]-y[a-1])/prec
+        a+=1
+    z[0]=0
+    plt.plot(x,y)
+    plt.plot(x,z)
+    plt.show()

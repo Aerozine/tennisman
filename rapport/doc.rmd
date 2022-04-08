@@ -19,6 +19,8 @@ output:
 \newpage
 \fontsize{12}{1} 
 \selectfont
+\tableofcontents
+\newpage
 
 # Question 1
 
@@ -27,7 +29,6 @@ output:
 Nous avons donc implemente la methode de la secante et avons etudie les 3 cas qui peuvent se presenter a nous comme annonce dans l ennonce.Lorsque la secante converge et trouve un tuple conntenant les coordone du zero approxime.Dans le deuxieme cas,afin de ne pas diviser par zero dans l equation de la secante(ref) , on retourne un status d erreur.La methode de la secante ne nous permet pas d etre assure de la convergence de la fonction, c est pour cela que nous implementons un nombre d iteration maximum comme gardien de boucle.Si jamais la fonction n as pas converge apres le nombremax d iteration, la fonction en deduit qu il n y a pas convergence.On a choisit le nombre d iteration max comme etant de 100.On sait que la trajectoire d une balle de tennis sera parabolique donc en faisant cette methode cela converge rapidement.Dans le cadre de ce cours , nous etudons des trajectoire parabolique une vingtaine d iteration devraient etre suffisant mais au vu de la faible complexite nous avons mis 100.<!--Si la fonction etait chronophage, cela aurrait augmente le temps latence de recuperation du resultat.Par exemple si la fonction prennait une seconde , avec 100 iteration max  on aurrait 100 secondes si jamais on diverge.-->
 
 
-<!-- ajouter un graph de la secante avec a chaque iteration le point et ensuite j explique et ajouter un tableau a cote si possible -->
 Voici un exemple(ref) d un graphique d une fonction que l on pourrait rencontrer lors de nos calcul de trajectoire.On remarque que avec 10 iteration on atteint assez rapidement une precision satisfaisante.
 
 ## méthode de la bissection
@@ -66,23 +67,31 @@ $$\ddot x = \frac{\rho\cdot\pi}{m}\cdot\frac{d^{2}}{8}\cdot\|\dot x\|^{2}(\frac{
 En comparant solve\_ivp et euler on se rends compte assez rapidement de la difference de temps.
 solve\_ivp est instantane pour une precision de 10e-5 alors que euler prends déja 6secondes.Et pour une precision 10 fois plus petite, Euler augmente drastiquement vers 60 alors que Solve\_ivp reste instantane.
 
-## subtitle 
+## conception de `trajectoirefilethorizontal`
 
 On a decide de prendre un argument non obligatoire a la fonction `trajectoirefilethorizontal` pour gerer le cas ou on a un rebond de facon recursive.En effet , un rebond peut etre considere conmme le point de depart d une nouvelle trajectoire.L avantage de cette technique , c est quelle permet d etre modulaire au niveau du rebond, si l on decide de ne plus prendre en compte le rebond , on ne devra pas changer de fonction.
 
 Les eventment choisi pour l utilisation de solve\_ivp on ete choisi de maniere analogique et non discrete car solve\_ivp est capable d utiliser ces resultat pour converger plus rapidement et plus precisement.
+
+Pour le choix des evenement,pour la prise en compte du filet , notre choix s est porté sur `CubicSpline` et comme `bc_type` nous avons choisit le type natural pour un resultat pour 
+
 # question4 
 Pour impleter les diverses fonction , au vu de la tache repetitie , nous avons decider de separer la tache en plusieurs fonction ( `get cible hauteur`et `getcible rebond`)
 ...
 <!--spam graph-->
 
 # question 5 
+
 On a pris en compte que la direction de la vitesse angulaire etait donne en entree de la fonction.
 Nous decidons de calculer la hauteur pour chaque repartition avec une etape de 10e-2 .
 A chqaue etape on recalcuera la hauteur. A la fin de toutes les repartitions , on essayera de retourner la repartition qui permet de trouver la valeur h la plus elevee.Pour l etape , nous avons choisis 10e-2 .Avec 10e-2 on fait 100 foi s des tours de boucle ce qui est la valeur minimale pour avoir une valeur en pourcentage 
 
 Pour savoir la repartition de l energie on se base sur l equation suivante (ref) et on en deduit les equation suivant (ref) premettant de calculer les diferentes fluctuation.
 
+```{python valv}
+import grafik
+
+```
 <!--faire un graph repartition en fct de omega -->
 
 

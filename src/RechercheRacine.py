@@ -18,7 +18,6 @@ def bissection(f,x0,x1,tol):
     while(abs(fx0-fx1)>tol):
         tmp = (x0+x1)/2 
         ftmp=f(tmp)
-        print(ftmp) 
         if(latest==a or latest==b):
             return 18,-1
         if(ftmp>0):
