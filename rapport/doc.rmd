@@ -18,7 +18,7 @@ output:
 <!--metadata en YAML utilise par pandoc pour faire le document LaTeX -->
 <!--definition de la police et ajout d un saut de page-->
 \newpage
-\fontsize{12}{1} 
+\fontsize{12}{2} 
 \selectfont
 \tableofcontents
 \newpage
@@ -50,13 +50,8 @@ D une autre part nous avons implemente l utilisation solve\_ivp de scipy.au vu d
 En optant pour la valeur de 0.001 pour
 rtol et la valeur 0.000001 pour atol , nous avons remarqué que avec ses valeur par defaut  aucun problème ne s est impose donc nous avons conserve ces parametres 
 
-<!--$$\ddot x\cdot m= F_{g}+F_{d}+F_{m}$$
-$$\ddot x = \rho\cdot\pi\cdot\frac{d^{2}}{8}\cdot\|\dot x\|^{2}(\frac{C_{m}}{m}+\frac{C_{d}}{m})-\frac{F_{g}}{m}$$-->
 $$\ddot x = \frac{\rho\cdot\pi}{m}\cdot\frac{d^{2}}{8}\cdot\|\dot x\|^{2}(\frac{1}{2+1.96\frac{\dot x}{\|w\|\cdot d}}+C_{d})-g$$
-<!-- ajouter un graph 3d on prends pas en compte le filet rebond-->
 <!--
- echo false permet de ne pas montrer le code mais juste de diffuser l output
-
 #ajouter des equation peut etre utile pour expliquer certaines demarches
 #-> numeroter les figures
 #-> titre legende
@@ -66,6 +61,10 @@ $$\ddot x = \frac{\rho\cdot\pi}{m}\cdot\frac{d^{2}}{8}\cdot\|\dot x\|^{2}(\frac{
 
 # question3
 
+```{python pyplot2,out.width="300px",echo=FALSE}
+import Trajectron
+Trajectron.show()
+```
 ## comparaison des deux methodes
 En comparant solve\_ivp et euler on se rends compte assez rapidement de la difference de temps.
 solve\_ivp est instantane pour une precision de 10e-5 alors que euler prends déja 6secondes.Et pour une precision 10 fois plus petite, Euler augmente drastiquement vers 60 alors que Solve\_ivp reste instantane.
@@ -79,8 +78,19 @@ Les eventment choisi pour l utilisation de solve\_ivp on ete choisi de maniere a
 Pour le choix des evenement,pour la prise en compte du filet , notre choix s est porté sur `CubicSpline` et comme `bc_type` nous avons choisit le type natural pour un resultat pour 
 
 # question4 
+## choix de la methode 
+Le choix s est porte sur la methode de la secante car celle ci ne necesite pas de borne opose pour pouvoir fonctionner
+Les points d existence choisi pour la secante sont a determiner au cas par cas en fonction de la fonction donne.
+En effet les valeurs intiales determinerons l ensemble des valeurs pouvant etre obtenue par la methode.
+
+## implementation 
 Pour impleter les diverses fonction , au vu de la tache repetitie , nous avons decider de separer la tache en plusieurs fonction ( `get cible hauteur`et `getcible rebond`)
-...
+Pour faire egalement varier les differents elements nous avons implmente `multinorm``multiomega`ainsi que `rotangle`
+L idee est de faire varier un parametre d entre x a travers une secante ou une bissection.
+Pour les differentes fonction nous avons du choisir des bornes differentes.
+Pour la rechercheHauteur il etait specifie de prendre une hauteur de 2 a 3m 
+Pour la rechercheOmega et recherchevitesse il a fallut poser une valeur maximale a la norme , que nous avons fixe a 100m/s et rad/sec
+
 <!--spam graph-->
 
 # question 5 
@@ -94,18 +104,5 @@ Pour savoir la repartition de l energie on se base sur l equation suivante   pre
 import grafik
 grafik.show1()
 ```
-Voici ici  \ref{fig:derivehauteur} un graph de la hauteur finale en fonction de la vitesse. 
-<!--faire un graph repartition en fct de omega -->
-
-
-
-a titre de comparaison :
-<!-- tableau de vitesse-->
-Vu que la variation de vitesse angulaire est inexistente , on s est permi d hardcoder des zero dans le calcul `oderhs` 
-
-```{python pyplot2,out.width="300px",echo=FALSE}
-import Trajectron
-Trajectron.show()
-```
-
+Voici ici  \ref{fig:derivehauteur} un graph de la hauteur finale en fonction de la vitesse.Ce graph demontre clairement que la derivee s annule bien uniquement lorsque la balle est a l appogee de la hauteur maximum
 

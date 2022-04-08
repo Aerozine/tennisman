@@ -19,10 +19,10 @@ hf=1
 g=-9.81 
 #coefficientderestitution [e] 0.5 0.8
 e=-0.7
-# size of any ndarray for accuracy and perf
-import numpy as np
+#parametre pouvant modifier le type de donnee, la valeur par defaut convient au cas aborde
+#si tableau numpy:
+#import numpy as np
 dtype=None
-#pour plus de lenteur et de precision float64  fait le travail , pour l instant c est inutile de l utiliser
 precision=  0.0001
 tol =       0.000001
 bistol=     0.000001
