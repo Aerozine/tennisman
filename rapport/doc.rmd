@@ -84,7 +84,9 @@ $$\ddot x = \frac{\rho\cdot\pi}{m}\cdot\frac{d^{2}}{8}\cdot\|\dot x\|^{2}(\frac{
 import Trajectron
 Trajectron.show()
 ```
+
 ## Comparaison des deux méthodes
+
 En comparant solve\_ivp et Euler, on se rend compte assez rapidement de la différence de temps d'excution.
 solve\_ivp est instantané pour une précision de 10e-5 alors qu'Euler prend déja 6 secondes.
 Et pour une précision 10 fois plus petite, Euler augmente drastiquement vers 60 alors que Solve\_ivp reste instantané.

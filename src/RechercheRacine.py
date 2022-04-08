@@ -1,6 +1,7 @@
 import __main__
 import sys
 import numpy as np 
+import random 
 def bissection(f,x0,x1,tol):
     a = x0 
     b = x1
@@ -13,7 +14,11 @@ def bissection(f,x0,x1,tol):
     if(fx1>fx0):
         return bissection(f,x1,x0,tol) 
     if((fx1>0 and fx0>0)or(fx1<0 and fx0<0)or(x1==x0)):
-        return 18,1
+    return 18,1
+
+    if(fx1>0 and fx0>0):
+        for i in range(10):
+            f(i/10*abs(x1-x0))>0
     latest = None
     while(abs(fx0-fx1)>tol):
         tmp = (x0+x1)/2 
