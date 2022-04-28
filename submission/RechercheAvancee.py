@@ -4,6 +4,7 @@ import Trajectoire as shot
 import const as cst
 from scipy.integrate import solve_ivp
 from scipy.interpolate import CubicSpline
+
 """
 angle, statut = rechercheangle(y0,ciblerebond)
 angle, statut = rechercheAngle2(y0,cibleHauteur)
@@ -56,6 +57,12 @@ def rotangle(pos,angle):
    pos[3]=np.sin(angle)*pos[3]
    pos[5]=np.cos(angle)*pos[5]
    return pos
+   """
+   novpos=pos[:]
+   novpos[3]=np.sin(angle)*pos[3]
+   novpos[5]=np.cos(angle)*pos[5]
+   return novpos
+   """
 
 #definit la norme du vecteur 
 def multinorm(pos,number):
@@ -66,37 +73,58 @@ def multinorm(pos,number):
     unit=pos[3:6]/ norm
     pos[3:6]=unit*number 
     return pos
-
+    """
+    novpos=pos[:]
+    norm =np.linalg.norm(pos[3:6])
+    if norm == 0:
+        novpos[3:6]=[0,0,0]
+        return pos
+    unit=pos[3:6]/ norm
+    pos[3:6]=unit*number 
+    return novpos
+    """
 #definit la norme du vecteur 
 def multiomega(pos,number):
+    pos=pos[:]
     norm = np.linalg.norm(pos[6:])
     if norm == 0:
-        pos[:6]=[0,0,0]
+        pos[6:]=[0,0,0]
         return pos
     unit=pos[6:]/np.linalg.norm(pos[6:])
     pos[6:]=unit*number 
     return pos
-
+    """
+    novpos=pos[:]
+    norm = np.linalg.norm(pos[6:9])
+    if norm == 0:
+        novpos[6:9]=[0,0,0]
+        return novpos
+    unit=pos[6:]/np.linalg.norm(pos[6:])
+    novpos[6:]=unit*number 
+    return novpos
+    """
 #recherche en fonction du parametre hauteurinitiale
 def rechercheHauteur(y,cibleRebond):
-    tmp=lambda x : Getciblerebond(np.concatenate((y[:2],[x],y[3:9])),100)
-    return ssqrt.bissection(tmp,2,3,cst.tol)
+    tmp=lambda x :cibleRebond - Getciblerebond(np.concatenate((y[:2],[x],y[3:9])),100)
+    return ssqrt.bissection(tmp,0,4,cst.tol)
 def rechercheHauteur2(y,cibleHauteur):
     tmp=lambda x : cibleHauteur - Getciblehauteur(np.concatenate((y[:2],[x],y[3:9])),100)
-    return ssqrt.bissection(tmp,2,3,cst.tol)
+    return ssqrt.bissection(tmp,0,6,cst.tol)
 
 #recherche en fonction de l angle
 
 def rechercheangle(y0,ciblerebond):
-    tmp=lambda x : Getciblerebond(rotangle(y0,x),100)
-    return ssqrt.bissection(tmp,0,np.pi/3,cst.tol)
+    y1=y0
+    tmp=lambda x : ciblerebond - Getciblerebond(rotangle(y0,x),100)
+    y0=y1
+    return ssqrt.bissection(tmp,0.001,np.pi/3,cst.tol)
 def rechercheAngle2(y0,cibleHauteur):
     tmp=lambda x : cibleHauteur - Getciblehauteur(rotangle(y0,x),100)
-    return ssqrt.bissection(tmp,0,np.pi/3,cst.tol)
+    return ssqrt.bissection(tmp,0.001,np.pi/3,cst.tol)
 
 #recherche en fonction de la norme de omega
 def rechercheOmega(y0,cibleRebond):
-    tmp=lambda x : Getciblerebond(multiomega(y0,x),100)
+    tmp=lambda x : cibleRebond - Getciblerebond(multiomega(y0,x),100)
     return ssqrt.bissection(tmp,0,300,cst.tol)
 def rechercheOmega2(y0,cibleHauteur):
     tmp=lambda x : cibleHauteur - Getciblehauteur(multiomega(y0,x),100)
@@ -104,31 +132,10 @@ def rechercheOmega2(y0,cibleHauteur):
 
 #recherche en fonction de la norme de vitesse
 def rechercheVitesse(y0,cibleRebond):
-    tmp=lambda x : Getciblerebond(multinorm(y0,x),100)
-    return ssqrt.bissection(tmp,0,300,cst.tol)
+    tmp=lambda x :cibleRebond - Getciblerebond(multinorm(y0,x),100)
+    return ssqrt.bissection(tmp,0,500,cst.tol)
 def rechercheVitesse2(y0,cibleHauteur):
     tmp=lambda x : cibleHauteur - Getciblehauteur(multinorm(y0,x),100)
-    return ssqrt.bissection(tmp,0,300,cst.tol)
-
-#y=np.array([-11.89, 0, 2 , 50, 1, 0,30, 15, 0])
-#print(rechercheAngle2(y,0))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return ssqrt.bissection(tmp,0,500,cst.tol)
+y=np.array([-11.89, 0, 2 , 50, 1, 0,30, 15, 0],dtype=np.float64)
+print(rechercheOmega2(y,0))

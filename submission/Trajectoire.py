@@ -59,7 +59,7 @@ def  trajectoirecomplete(yInit,T,bouncing=True):
         return np.append(pos.y,trajectoirecomplete(pos.y[:,-1],T-(pos.y.shape[1]-1)*cst.precision,bouncing=False),axis=1)
     return pos.y 
 #inserer le tableau pour le graph ici
-ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00],dtype=cst.dtype)            
+ytest=np.array([-11.89,0,2,50,1,0,30,15,0],dtype=cst.dtype)            
 
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt 
@@ -76,5 +76,4 @@ def show():
     ax.set_zlabel('Z-axis', fontweight ='bold')
     ax.plot3D(x,y,z,'red')
     plt.show()
-show()
 """
