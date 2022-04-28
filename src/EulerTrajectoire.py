@@ -63,4 +63,6 @@ def  trajectoireFiletHorizontal(yInit,T,bouncing=True):
 def evenement(t,y):
     return 0>y[2]
 evenement.terminal=True
-
+y=np.array([-11.89, 0, 2 , 50, 1, 0,30, 15, 0])
+T=np.array([0,1])
+print(euler(oderhs,T,y,evenement))

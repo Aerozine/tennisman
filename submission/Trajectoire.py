@@ -26,7 +26,6 @@ def oderhs(t,y):
 def  trajectoireFiletHorizontal(yInit,T,bouncing=True):
     tmp=np.arange(0,T,cst.precision)
     pos=solve_ivp(oderhs,(0,T),yInit,t_eval=tmp,events=evenement,rtol=cst.rtol,atol=cst.atol)
-    #pos=method(oderhs,[0,T],yInit,events=evenement) 
     for i in range(pos.shape[1]):
         # si on n as pas encore passé le filet(la balle est du meme coté que la pos init)
         # si la posz de la balle est plus petite que le filet et que la balle descend
@@ -43,4 +42,39 @@ def evenement(t,y):
     return y[2]
 evenement.terminal=True
 
+"""
+def  trajectoirecomplete(yInit,T,bouncing=True):
+    tmp=np.arange(0,T,cst.precision)
+    pos=solve_ivp(oderhs,(0,T),yInit,t_eval=tmp,events=evenement,rtol=cst.rtol,atol=cst.atol)
+    for i in range(pos.y.shape[1]):
+        # si on n as pas encore passé le filet(la balle est du meme coté que la pos init)
+        # si la posz de la balle est plus petite que le filet et que la balle descend
+        # cela ne sert a rien , la balle ne passera pas le filet 
+        if( pos.y[0,i]*pos.y[0,0]>0 and pos.y[5,i]<0 and pos.y[2,i]<cst.hf  ):
+            return np.resize(pos.y,(9,i))
+    #dans le cas d un deuxieme rebond il suffit de repartir de la derniere position et de redefinir la vitesse verticale comme multiplié par e 
+    if( bouncing ):
+        pos.y[5,-1]=pos.y[5,-1]*cst.e
+        # pos shape donne la taile du tableau or le premier element contient la pos initale
+        return np.append(pos.y,trajectoirecomplete(pos.y[:,-1],T-(pos.y.shape[1]-1)*cst.precision,bouncing=False),axis=1)
+    return pos.y 
+#inserer le tableau pour le graph ici
+ytest=np.array([-1.189e+01,  0.000e+00,  2.000e+00 , 5.000e+01,  1.000e+00 , 0.000e+00, 3.000e-03 , 1.500e-03,  0.000e+00],dtype=cst.dtype)            
 
+from mpl_toolkits import mplot3d
+import matplotlib.pyplot as plt 
+def show():
+    a=trajectoirecomplete(ytest,1)     
+    plt.title("trajectoire")
+    x=a[0,:]
+    y=a[1,:]
+    z=a[2,:]
+    ax=plt.axes(projection='3d')
+    ax. view_init(elev=26, azim=-88)
+    ax.set_xlabel('X-axis', fontweight ='bold')
+    ax.set_ylabel('Y-axis', fontweight ='bold')
+    ax.set_zlabel('Z-axis', fontweight ='bold')
+    ax.plot3D(x,y,z,'red')
+    plt.show()
+show()
+"""

@@ -21,9 +21,9 @@ def IsOnTheGround(t,y):
         return 1
 def FiletCourbe(t,y):
     yf=y[0]        
-    xp = (-9.144,0,9.144)
-    yp = (1.07,0.914,1.07)
-    cs = CubicSpline(xp,yp,bc_type='natural')
+    #cst.xp = (-9.144,0,9.144)
+    #cst.yp = (1.07,0.914,1.07)
+    cs = CubicSpline(cst.xp,cst.yp,bc_type='natural')
     if(y[0]<10e-6 and  y[2]<cs(yf) ):
         return 0 
     return 1
@@ -86,12 +86,13 @@ def rechercheHauteur2(y,cibleHauteur):
     return ssqrt.bissection(tmp,2,3,cst.tol)
 
 #recherche en fonction de l angle
+
 def rechercheangle(y0,ciblerebond):
     tmp=lambda x : Getciblerebond(rotangle(y0,x),100)
-    return ssqrt.bissection(tmp,0,np.pi/2,cst.tol)
+    return ssqrt.bissection(tmp,0,np.pi/3,cst.tol)
 def rechercheAngle2(y0,cibleHauteur):
     tmp=lambda x : cibleHauteur - Getciblehauteur(rotangle(y0,x),100)
-    return ssqrt.bissection(tmp,0,np.pi/2,cst.tol)
+    return ssqrt.bissection(tmp,0,np.pi/3,cst.tol)
 
 #recherche en fonction de la norme de omega
 def rechercheOmega(y0,cibleRebond):
@@ -108,3 +109,26 @@ def rechercheVitesse(y0,cibleRebond):
 def rechercheVitesse2(y0,cibleHauteur):
     tmp=lambda x : cibleHauteur - Getciblehauteur(multinorm(y0,x),100)
     return ssqrt.bissection(tmp,0,300,cst.tol)
+
+#y=np.array([-11.89, 0, 2 , 50, 1, 0,30, 15, 0])
+#print(rechercheAngle2(y,0))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
