@@ -54,27 +54,14 @@ def Getciblehauteur(y,t,bouncing=True ):
 #modifie l inclinaison sur l axe XZ
 def rotangle(pos,angle):
 # ici la composante en y ne joue en rien  elle est prit en entrée pour simplifier les tableau
-   pos[3]=np.sin(angle)*pos[3]
-   pos[5]=np.cos(angle)*pos[5]
-   return pos
-   """
    novpos=pos[:]
    novpos[3]=np.sin(angle)*pos[3]
    novpos[5]=np.cos(angle)*pos[5]
    return novpos
-   """
 
 #definit la norme du vecteur 
 def multinorm(pos,number):
-    norm =np.linalg.norm(pos[3:6])
-    if norm == 0:
-        pos[3:6]=[0,0,0]
-        return pos
-    unit=pos[3:6]/ norm
-    pos[3:6]=unit*number 
-    return pos
-    """
-    novpos=pos[:]
+  novpos=pos[:]
     norm =np.linalg.norm(pos[3:6])
     if norm == 0:
         novpos[3:6]=[0,0,0]
@@ -82,18 +69,8 @@ def multinorm(pos,number):
     unit=pos[3:6]/ norm
     pos[3:6]=unit*number 
     return novpos
-    """
 #definit la norme du vecteur 
 def multiomega(pos,number):
-    pos=pos[:]
-    norm = np.linalg.norm(pos[6:])
-    if norm == 0:
-        pos[6:]=[0,0,0]
-        return pos
-    unit=pos[6:]/np.linalg.norm(pos[6:])
-    pos[6:]=unit*number 
-    return pos
-    """
     novpos=pos[:]
     norm = np.linalg.norm(pos[6:9])
     if norm == 0:
@@ -102,7 +79,6 @@ def multiomega(pos,number):
     unit=pos[6:]/np.linalg.norm(pos[6:])
     novpos[6:]=unit*number 
     return novpos
-    """
 #recherche en fonction du parametre hauteurinitiale
 def rechercheHauteur(y,cibleRebond):
     tmp=lambda x :cibleRebond - Getciblerebond(np.concatenate((y[:2],[x],y[3:9])),100)
@@ -138,4 +114,3 @@ def rechercheVitesse2(y0,cibleHauteur):
     tmp=lambda x : cibleHauteur - Getciblehauteur(multinorm(y0,x),100)
     return ssqrt.bissection(tmp,0,500,cst.tol)
 y=np.array([-11.89, 0, 2 , 50, 1, 0,30, 15, 0],dtype=np.float64)
-print(rechercheOmega2(y,0))

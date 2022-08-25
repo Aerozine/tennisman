@@ -19,7 +19,6 @@ def bissection(f,x0,x1,tol):
     if(fx1*fx0>0):
         for i in range(1,10):
             ftmp=f(x0+(i/10)*abs(x1-x0))
-            print(ftmp)
             if ftmp*fx1<0:
                 return bissection(f,x0,i/10*abs(x1-x0),tol)
         return 18,1

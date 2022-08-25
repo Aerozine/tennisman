@@ -34,4 +34,4 @@ def methodemagique(pos,dirv,dirw,t,E):
        print("error no None")
        return 0
    return ssqrt.bissection(tmp,a,80,cst.bistol)
-#methodemagique(np.array([-11.89,0,2]),np.array([1,0,0]),np.array([0,1,0]),10,70)
+print(methodemagique(np.array([-11.89,0,2]),np.array([1,0,0]),np.array([0,1,0]),10,70))
