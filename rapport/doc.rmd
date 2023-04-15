@@ -5,10 +5,10 @@ title:    |
 subtitle: | 
           | Premier bachelier en sciences de l'ingénieur
           | Année académique 2021-2022.Travail réalisé par:
-author:
-- Loic Delbarre (S215072)
-- Rafik Lourmathi (S212097)
-- Salman Guseynov (S216862)
+#author:
+#- Loic Delbarre (S215072)
+#- Rafik Lourmathi (S212097)
+#- Salman Guseynov (S216862)
 date: '`r Sys.setlocale("LC_TIME", "French"); gsub(" 0", " ",format(Sys.Date(), "Le %d %B %Y"))`'
 output: 
   pdf_document: 
@@ -109,7 +109,8 @@ La fonction `Getciblerebond` nous retournera la distance sur x de l'impact et `G
 # Question 5
 
 ```{python ,derivehauteur,out.width="300px",echo=FALSE,fig.cap="\\label{fig:derivehauteur}dérivée de la fonction `Getciblehauteur`"}
-import grafik grafik.show1()
+import grafik
+grafik.show1()
 ```
 Pour trouver le meilleur ratio de vitesse et de vitesse angulaire,nous nous sommes basés sur la dérivée de la fonction `Getciblehauteur`,en effet lorsque celle ci aura atteint sa valeur nulle,cela signifiera que nous sommes à la hauteur maximale pouvant etre atteinte.Il faut cependant négliger la plage de valeurs ne permettant pas d atteindre la ligne de fond.Pour cela , nous allons parcourir les valeurs possible jusqu'a ce que la fonction commence a fluctuer.C'est a partir de ce moment la que nous nous baserons sur le resultat obtenu d une bissection englobant la zone de fluctuation.
 Voici ici (\ref{fig:derivehauteur}) un graphique de la hauteur finale en fonction de la vitesse. Ce graphique démontre clairement que la dérivée s'annule bien uniquement lorsque la balle est à l'apogée de la hauteur maximale.
